@@ -16,4 +16,3 @@ with open ("result.txt","a")as file:
     file.write(f'Image:{file_path}\n')
     file.write(text)
     
-# //how to create a new file and append the text?

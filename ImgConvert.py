@@ -3,10 +3,10 @@ import sys
 from pathlib import Path
 from langchain.llms import ollama
 import cv2
-import tkinter as tk
+from pdf_processing import *
 from date_time import get_current_time
 
-pdf_path ='Attestation d\'impot.pdf'
+pdf_path ='test.pdf'
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\Tesseract-OCR\\tesseract.exe'
 to_check_folder =Path('TODO')
 destination_folder=Path('Result')
@@ -44,8 +44,11 @@ def main(to_check: str, destination: str) -> None:
 
 
 if __name__ == '__main__':
-    main(to_check_folder, destination_folder)
+    imgs=extract_scanned(pdf_path)
+    for img in imgs:
+        cv2.imwrite(f'{to_check_folder}/{img}.png',img)
+            
+    # main(to_check_folder, destination_folder)
 
-print(img_to_string(pdf_path))
 
 

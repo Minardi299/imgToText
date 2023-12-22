@@ -1,4 +1,8 @@
 import fitz
+import numpy as np
+import cv2
+
+
 pdf_path='test.pdf'
 
 
@@ -13,16 +17,26 @@ def extract_searchable(path: str) ->str:
         out.close
     return text
 
-def extract_scanned(path: str) -> str:
+def extract_scanned(path: str) :
+    text=''
     doc=fitz.open(path)
     zoom = 1.2
     mat = fitz.Matrix(zoom, zoom)
 
     for page_index in range(len(doc)):
         page = doc[page_index] #number of page
+        img = page.get_images()
+
         pix = page.get_pixmap(matrix = mat)
-        
-        pix.save(f"page_{page_index}.png")
+        img=pix.pil_tobytes("JPEG")
+        cv2_image = cv2.imdecode(np.frombuffer(bytearray(img), dtype=np.uint8), cv2.IMREAD_COLOR)
+        cv2.imshow('Decoded Image', cv2_image)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+    return text
+
+        # pix.save(f"page_{page_index}.png")
+
     # for page_index in range(len(doc)): # iterate over pdf pages
     #     page = doc[page_index] # get the page
     #     image_list = page.get_images()
@@ -42,5 +56,6 @@ def extract_scanned(path: str) -> str:
 
     #         pix.save(f"page_{page_index}_image_{image_index}.png") # save the image as png
     #         pix = None
-extract_scanned(pdf_path)
 
+
+extract_scanned(pdf_path)

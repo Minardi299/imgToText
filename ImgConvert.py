@@ -4,9 +4,9 @@ from pathlib import Path
 from langchain.llms import ollama
 import cv2
 import tkinter as tk
-import datetime
 from date_time import get_current_time
 
+pdf_path ='Attestation d\'impot.pdf'
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\Tesseract-OCR\\tesseract.exe'
 to_check_folder =Path('TODO')
 destination_folder=Path('Result')
@@ -46,5 +46,6 @@ def main(to_check: str, destination: str) -> None:
 if __name__ == '__main__':
     main(to_check_folder, destination_folder)
 
+print(img_to_string(pdf_path))
 
 

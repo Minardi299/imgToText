@@ -1,9 +1,9 @@
 import fitz
 import numpy as np
 import cv2
+from ImgConvert import *
 
-
-pdf_path='test.pdf'
+pdf_path='p3.pdf'
 
 
 def extract_searchable(path: str) ->str:
@@ -30,12 +30,10 @@ def extract_scanned(path: str) :
         pix = page.get_pixmap(matrix = mat)
         img=pix.pil_tobytes("JPEG")
         cv2_image = cv2.imdecode(np.frombuffer(bytearray(img), dtype=np.uint8), cv2.IMREAD_COLOR)
-        cv2.imshow('Decoded Image', cv2_image)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        
+
     return text
 
-        # pix.save(f"page_{page_index}.png")
 
     # for page_index in range(len(doc)): # iterate over pdf pages
     #     page = doc[page_index] # get the page
